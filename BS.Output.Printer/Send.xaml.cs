@@ -1,43 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
 namespace BS.Output.Printer
 {
-  partial class Edit : Window
+  partial class Send : Window
   {
-
-    public Edit(Output output)
+ 
+    public Send(int numberOfCopies,
+                bool landscape,
+                bool centerImage,
+                bool fitImage,
+                bool infoTopOfImage,
+                bool infoWorkstation,
+                bool infoCurrentUser,
+                bool infoPrintDate,
+                bool infoImageTitle,
+                bool infoImageNote,
+                bool infoImageCreateDate,
+                bool infoImageLastChangeDate)
     {
       InitializeComponent();
-  
-      NameTextBox.Text = output.Name;
-      NumberOfCopiesTextBox.Text = output.NumberOfCopies.ToString();
-      PageOrientationComboBox.SelectedIndex = (output.Landscape) ? 1 : 0;
-      CenterImageCheckBox.IsChecked = output.CenterImage;
-      FitImageCheckBox.IsChecked = output.FitImage;
-      InfoTopOfImageComboBox.SelectedIndex = (output.InfoTopOfImage) ? 0 : 1;
-      InfoWorkstationCheckBox.IsChecked = output.InfoWorkstation;
-      InfoCurrentUserCheckBox.IsChecked = output.InfoCurrentUser;
-      InfoPrintDateCheckBox.IsChecked = output.InfoPrintDate;
-      InfoImageTitleCheckBox.IsChecked = output.InfoImageTitle;
-      InfoImageNoteCheckBox.IsChecked = output.InfoImageNote;
-      InfoImageCreateDateCheckBox.IsChecked = output.InfoImageCreateDate;
-      InfoImageLastChangeDateCheckBox.IsChecked = output.InfoImageLastChangeDate;
-      ChangeSettingBeforePrintCheckBox.IsChecked = output.ChangeSettingBeforePrint;
 
-      NameTextBox.TextChanged += ValidateData;
+      // TODO Drucker-Auswahl hinzufügen
+
+      NumberOfCopiesTextBox.Text = numberOfCopies.ToString();
+      PageOrientationComboBox.SelectedIndex = (landscape) ? 1 : 0;
+      CenterImageCheckBox.IsChecked = centerImage;
+      FitImageCheckBox.IsChecked = fitImage;
+      InfoTopOfImageComboBox.SelectedIndex = (infoTopOfImage) ? 0 : 1;
+      InfoWorkstationCheckBox.IsChecked = infoWorkstation;
+      InfoCurrentUserCheckBox.IsChecked = infoCurrentUser;
+      InfoPrintDateCheckBox.IsChecked = infoPrintDate;
+      InfoImageTitleCheckBox.IsChecked = infoImageTitle;
+      InfoImageNoteCheckBox.IsChecked = infoImageNote;
+      InfoImageCreateDateCheckBox.IsChecked = infoImageCreateDate;
+      InfoImageLastChangeDateCheckBox.IsChecked = infoImageLastChangeDate;
+      
+      NumberOfCopiesTextBox.TextChanged += ValidateData;
+      PageOrientationComboBox.SelectionChanged += ValidateData;
+      InfoTopOfImageComboBox.SelectionChanged += ValidateData;
       ValidateData(null, null);
 
-    }
-     
-    public string OutputName
-    {
-      get { return NameTextBox.Text; }
     }
 
     public int NumberOfCopies
@@ -100,11 +107,6 @@ namespace BS.Output.Printer
       get { return InfoImageLastChangeDateCheckBox.IsChecked.Value; }
     }
 
-    public bool ChangeSettingBeforePrint
-    {
-      get { return ChangeSettingBeforePrintCheckBox.IsChecked.Value; }
-    }
-
     private void NumberOfCopies_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
@@ -112,13 +114,16 @@ namespace BS.Output.Printer
 
     private void ValidateData(object sender, EventArgs e)
     {
-      OK.IsEnabled = Validation.IsValid(NameTextBox);
+      OK.IsEnabled = Validation.IsValid(NumberOfCopiesTextBox) &&
+                     Validation.IsValid(PageOrientationComboBox) &&
+                     Validation.IsValid(InfoTopOfImageComboBox);
     }
 
     private void OK_Click(object sender, RoutedEventArgs e)
     {
-      DialogResult = true;     
+      this.DialogResult = true;
     }
 
   }
+
 }

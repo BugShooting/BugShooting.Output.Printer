@@ -67,6 +67,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Send.xaml.cs">
+      <DependentUpon>Send.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Validation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +89,10 @@
     <Page Include="Edit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Send.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

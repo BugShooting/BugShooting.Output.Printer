@@ -36,7 +36,20 @@ namespace BS.Output.Printer
     protected override Output CreateOutput(IWin32Window Owner)
     {
 
-      Output output = new Output(Name, true);
+      Output output = new Output(Name, 
+                                 1,
+                                 true, 
+                                 false, 
+                                 true,
+                                 false,
+                                 false,
+                                 false,
+                                 false,
+                                 false,
+                                 false,
+                                 false,
+                                 true,
+                                 true);
 
       return EditOutput(Owner, output);
 
@@ -52,7 +65,20 @@ namespace BS.Output.Printer
       
       if (edit.ShowDialog() == true) {
 
-        return new Output(edit.OutputName, edit.ShowPrinterDialog);
+        return new Output(edit.OutputName,
+                          edit.NumberOfCopies,
+                          edit.Landscape,
+                          edit.CenterImage,
+                          edit.FitImage,
+                          edit.InfoTopOfImage,
+                          edit.InfoWorkstation,
+                          edit.InfoCurrentUser,
+                          edit.InfoPrintDate,
+                          edit.InfoImageTitle,
+                          edit.InfoImageNote,
+                          edit.InfoImageCreateDate,
+                          edit.InfoImageLastChangeDate,
+                          edit.ChangeSettingBeforePrint);
       }
       else
       {
@@ -67,7 +93,19 @@ namespace BS.Output.Printer
       OutputValueCollection outputValues = new OutputValueCollection();
 
       outputValues.Add(new OutputValue("Name", Output.Name));
-      outputValues.Add(new OutputValue("ShowPrinterDialog", Convert.ToString(Output.ShowPrinterDialog)));
+      outputValues.Add(new OutputValue("NumberOfCopies", Output.NumberOfCopies.ToString()));
+      outputValues.Add(new OutputValue("Landscape", Output.Landscape.ToString()));
+      outputValues.Add(new OutputValue("CenterImage", Output.CenterImage.ToString()));
+      outputValues.Add(new OutputValue("FitImage", Output.FitImage.ToString()));
+      outputValues.Add(new OutputValue("InfoTopOfImage", Output.InfoTopOfImage.ToString()));
+      outputValues.Add(new OutputValue("InfoWorkstation", Output.InfoWorkstation.ToString()));
+      outputValues.Add(new OutputValue("InfoCurrentUser", Output.InfoCurrentUser.ToString()));
+      outputValues.Add(new OutputValue("InfoPrintDate", Output.InfoPrintDate.ToString()));
+      outputValues.Add(new OutputValue("InfoImageTitle", Output.InfoImageTitle.ToString()));
+      outputValues.Add(new OutputValue("InfoImageNote", Output.InfoImageNote.ToString()));
+      outputValues.Add(new OutputValue("InfoImageCreateDate", Output.InfoImageCreateDate.ToString()));
+      outputValues.Add(new OutputValue("InfoImageLastChangeDate", Output.InfoImageLastChangeDate.ToString()));
+      outputValues.Add(new OutputValue("ChangeSettingBeforePrint", Output.ChangeSettingBeforePrint.ToString()));
 
       return outputValues;
       
@@ -77,7 +115,19 @@ namespace BS.Output.Printer
     {
 
       return new Output(OutputValues["Name", this.Name].Value,
-                        Convert.ToBoolean(OutputValues["ShowPrinterDialog", Convert.ToString(true)].Value));
+                        Convert.ToInt32(OutputValues["NumberOfCopies", Convert.ToString(1)].Value),
+                        Convert.ToBoolean(OutputValues["Landscape", Convert.ToString(true)].Value),
+                        Convert.ToBoolean(OutputValues["CenterImage", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["FitImage", Convert.ToString(true)].Value),
+                        Convert.ToBoolean(OutputValues["InfoTopOfImage", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoWorkstation", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoCurrentUser", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoPrintDate", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoImageTitle", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoImageNote", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoImageCreateDate", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["InfoImageLastChangeDate", Convert.ToString(false)].Value),
+                        Convert.ToBoolean(OutputValues["ChangeSettingBeforePrint", Convert.ToString(true)].Value));
 
     }
 
@@ -87,26 +137,59 @@ namespace BS.Output.Printer
       try
       {
 
-        if (Output.ShowPrinterDialog)
+        int numberOfCopies = Output.NumberOfCopies;
+        bool landscape = Output.Landscape;
+        bool centerImage = Output.CenterImage;
+        bool fitImage = Output.FitImage;
+        bool infoTopOfImage = Output.InfoTopOfImage;
+        bool infoWorkstation = Output.InfoWorkstation;
+        bool infoCurrentUser = Output.InfoCurrentUser;
+        bool infoPrintDate = Output.InfoPrintDate;
+        bool infoImageTitle = Output.InfoImageTitle;
+        bool infoImageNote = Output.InfoImageNote;
+        bool infoImageCreateDate = Output.InfoImageCreateDate;
+        bool infoImageLastChangeDate = Output.InfoImageLastChangeDate;
+
+        if (Output.ChangeSettingBeforePrint)
         {
 
-          var printer = new System.Windows.Controls.PrintDialog();
-          printer.ShowDialog();
+          Send send = new Send(numberOfCopies,
+                               landscape,
+                               centerImage,
+                               fitImage,
+                               infoTopOfImage,
+                               infoWorkstation,
+                               infoCurrentUser,
+                               infoPrintDate,
+                               infoImageTitle,
+                               infoImageNote,
+                               infoImageCreateDate,
+                               infoImageLastChangeDate);
 
+          var ownerHelper = new System.Windows.Interop.WindowInteropHelper(send);
+          ownerHelper.Owner = Owner.Handle;
 
-          using (PrintDialog printDialog = new PrintDialog())
+          if (!send.ShowDialog() == true)
           {
-
-            printDialog.PrinterSettings.
-
-            if (printDialog.ShowDialog(Owner) !=  DialogResult.OK)
-            {
-              return new V3.SendResult(V3.Result.Canceled);
-            }
-
+            return new V3.SendResult(V3.Result.Canceled);
           }
 
+          numberOfCopies = send.NumberOfCopies;
+          landscape = send.Landscape;
+          centerImage = send.CenterImage;
+          fitImage = send.FitImage;
+          infoTopOfImage = send.InfoTopOfImage;
+          infoWorkstation = send.InfoWorkstation;
+          infoCurrentUser = send.InfoCurrentUser;
+          infoPrintDate = send.InfoPrintDate;
+          infoImageTitle = send.InfoImageTitle;
+          infoImageNote = send.InfoImageNote;
+          infoImageCreateDate = send.InfoImageCreateDate;
+          infoImageLastChangeDate = send.InfoImageLastChangeDate;
+
         }
+
+        // TODO
 
         return new V3.SendResult(V3.Result.Success);
 
