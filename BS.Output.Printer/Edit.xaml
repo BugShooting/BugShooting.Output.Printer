@@ -1,0 +1,137 @@
+﻿<Window x:Class="BS.Output.Printer.Edit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:BS.Output.Printer"
+        x:ClassModifier="internal"
+        mc:Ignorable="d" 
+        Title="Printer"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Width="400"
+        SizeToContent="Height">
+
+  <StackPanel Grid.IsSharedSizeScope="True" Margin="4">
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Name</Label>
+      <TextBox x:Name="NameTextBox" Grid.Column="1" VerticalContentAlignment="Center" local:Validation.Required="True" />
+    </Grid>
+    <Separator />
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Number of copies</Label>
+      <TextBox x:Name="NumberOfCopiesTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="NumberOfCopies_PreviewTextInput" local:Validation.Required="True" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Page orientation</Label>
+      <ComboBox x:Name="PageOrientationComboBox" Grid.Column="1" SelectedValuePath="Name" local:Validation.Required="True" >
+        <ComboBoxItem Name="Portrait">Portrait</ComboBoxItem>
+        <ComboBoxItem Name="Landscape">Landscape</ComboBoxItem>
+      </ComboBox>
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Image position</Label>
+      <ComboBox x:Name="ImagePositionComboBox" Grid.Column="1" SelectedValuePath="Name" local:Validation.Required="True" >
+        <ComboBoxItem Name="TopLeft">Top left</ComboBoxItem>
+        <ComboBoxItem Name="Center">Center</ComboBoxItem>
+      </ComboBox>
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="FitImageCheckBox" Grid.Column="1" Content="Fit image" />
+    </Grid>
+    <Separator />
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Print informations</Label>
+      <ComboBox x:Name="PrintInfoComboBox" Grid.Column="1" SelectedValuePath="Name" local:Validation.Required="True" >
+        <ComboBoxItem Name="TopOfImage">Top of Image</ComboBoxItem>
+        <ComboBoxItem Name="BelowImage">Below image</ComboBoxItem>
+      </ComboBox>
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoCurrentUserCheckBox" Grid.Column="1" Content="Current user" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoCreateDateCheckBox" Grid.Column="1" Content="Create date" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoLastChangeDateCheckBox" Grid.Column="1" Content="Last change date" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoPrintDateCheckBox" Grid.Column="1" Content="Print date" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoImageTitleCheckBox" Grid.Column="1" Content="Image title" />
+    </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="InfoImageNoteCheckBox" Grid.Column="1" Content="Image note" />
+    </Grid>
+    <Separator />
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="ChangeSettingBeforePrintCheckBox" Grid.Column="1" Content="Change settings before print" />
+    </Grid>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
+      <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />
+      <Button Width="80" Height="24" Content="Cancel" Margin="4" IsCancel="True" />
+    </StackPanel>
+  </StackPanel>
+
+</Window>
