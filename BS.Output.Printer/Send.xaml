@@ -9,10 +9,18 @@
         Title="Send"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Width="300"
+        Width="400"
         SizeToContent="Height">
 
   <StackPanel Grid.IsSharedSizeScope="True" Margin="4">
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0">Printer</Label>
+      <ComboBox x:Name="PrinterComboBox" Grid.Column="1" local:Validation.Required="True" />
+    </Grid>
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>

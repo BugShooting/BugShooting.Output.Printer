@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Drawing.Printing;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BS.Output.Printer
 {
@@ -25,7 +24,8 @@ namespace BS.Output.Printer
     {
       InitializeComponent();
 
-      // TODO Drucker-Auswahl hinzufügen
+      PrinterComboBox.ItemsSource = PrinterSettings.InstalledPrinters;
+      PrinterComboBox.SelectedValue = (new PrinterSettings()).PrinterName;
 
       NumberOfCopiesTextBox.Text = numberOfCopies.ToString();
       PageOrientationComboBox.SelectedIndex = (landscape) ? 1 : 0;
@@ -39,12 +39,18 @@ namespace BS.Output.Printer
       InfoImageNoteCheckBox.IsChecked = infoImageNote;
       InfoImageCreateDateCheckBox.IsChecked = infoImageCreateDate;
       InfoImageLastChangeDateCheckBox.IsChecked = infoImageLastChangeDate;
-      
+
+      PrinterComboBox.SelectionChanged += ValidateData;
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
       InfoTopOfImageComboBox.SelectionChanged += ValidateData;
       ValidateData(null, null);
 
+    }
+
+    public string PrinterName
+    {
+      get { return (string)PrinterComboBox.SelectedValue; }
     }
 
     public int NumberOfCopies
@@ -114,7 +120,8 @@ namespace BS.Output.Printer
 
     private void ValidateData(object sender, EventArgs e)
     {
-      OK.IsEnabled = Validation.IsValid(NumberOfCopiesTextBox) &&
+      OK.IsEnabled = Validation.IsValid(PrinterComboBox) &&
+                     Validation.IsValid(NumberOfCopiesTextBox) &&
                      Validation.IsValid(PageOrientationComboBox) &&
                      Validation.IsValid(InfoTopOfImageComboBox);
     }
