@@ -54,7 +54,7 @@
       </Grid.ColumnDefinitions>
       <Label Grid.Column="0">Print informations</Label>
       <ComboBox x:Name="InfoTopOfImageComboBox" Grid.Column="1" local:Validation.Required="True" >
-        <ComboBoxItem>Top of Image</ComboBoxItem>
+        <ComboBoxItem>Top of image</ComboBoxItem>
         <ComboBoxItem>Below image</ComboBoxItem>
       </ComboBox>
     </Grid>
