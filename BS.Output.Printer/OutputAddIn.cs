@@ -189,7 +189,7 @@ namespace BS.Output.Printer
 
         }
 
-        // TODO
+        // TODO Drucken
 
         return new V3.SendResult(V3.Result.Success);
 
