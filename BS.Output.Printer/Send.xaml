@@ -54,7 +54,6 @@
       </Grid.ColumnDefinitions>
       <CheckBox x:Name="FitImageCheckBox" Grid.Column="1" Content="Fit image" />
     </Grid>
-    <Separator />
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>

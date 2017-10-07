@@ -21,6 +21,13 @@
       <Label Grid.Column="0">Name</Label>
       <TextBox x:Name="NameTextBox" Grid.Column="1" VerticalContentAlignment="Center" local:Validation.Required="True" />
     </Grid>
+    <Grid Margin="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <CheckBox x:Name="ChangeSettingBeforePrintCheckBox" Grid.Column="1" Content="Change settings before print" />
+    </Grid>
     <Separator />
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
@@ -55,7 +62,6 @@
       </Grid.ColumnDefinitions>
       <CheckBox x:Name="FitImageCheckBox" Grid.Column="1" Content="Fit image" />
     </Grid>
-    <Separator />
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
@@ -115,14 +121,6 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <CheckBox x:Name="InfoImageLastChangeDateCheckBox" Grid.Column="1" Content="Image last change date" />
-    </Grid>
-    <Separator />
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="ChangeSettingBeforePrintCheckBox" Grid.Column="1" Content="Change settings before print" />
     </Grid>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
       <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />
