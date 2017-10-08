@@ -21,6 +21,7 @@ namespace BS.Output.Printer
       CenterImageCheckBox.IsChecked = output.CenterImage;
       FitImageCheckBox.IsChecked = output.FitImage;
       InfoTopOfImageComboBox.SelectedIndex = (output.InfoTopOfImage) ? 0 : 1;
+      InfoTextSizeTextBox.Text = output.InfoTextSize.ToString();
       InfoWorkstationCheckBox.IsChecked = output.InfoWorkstation;
       InfoCurrentUserCheckBox.IsChecked = output.InfoCurrentUser;
       InfoPrintDateCheckBox.IsChecked = output.InfoPrintDate;
@@ -29,7 +30,7 @@ namespace BS.Output.Printer
       InfoImageCreateDateCheckBox.IsChecked = output.InfoImageCreateDate;
       InfoImageLastChangeDateCheckBox.IsChecked = output.InfoImageLastChangeDate;
       ChangeSettingBeforePrintCheckBox.IsChecked = output.ChangeSettingBeforePrint;
-
+      
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
       InfoTopOfImageComboBox.SelectionChanged += ValidateData;
