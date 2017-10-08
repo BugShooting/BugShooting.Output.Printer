@@ -9,115 +9,133 @@
         Title="Send"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Width="400"
-        SizeToContent="Height">
+        SizeToContent="WidthAndHeight">
 
-  <StackPanel Grid.IsSharedSizeScope="True" Margin="4">
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Printer</Label>
-      <ComboBox x:Name="PrinterComboBox" Grid.Column="1" local:Validation.Required="True" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Number of copies</Label>
-      <TextBox x:Name="NumberOfCopiesTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="NumberOfCopies_PreviewTextInput" local:Validation.Required="True" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Page orientation</Label>
-      <ComboBox x:Name="PageOrientationComboBox" Grid.Column="1" local:Validation.Required="True" >
-        <ComboBoxItem>Portrait</ComboBoxItem>
-        <ComboBoxItem>Landscape</ComboBoxItem>
-      </ComboBox>
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="CenterImageCheckBox" Grid.Column="1" Content="Center image" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="FitImageCheckBox" Grid.Column="1" Content="Fit image" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Print informations</Label>
-      <ComboBox x:Name="InfoTopOfImageComboBox" Grid.Column="1" local:Validation.Required="True" >
-        <ComboBoxItem>Top of image</ComboBoxItem>
-        <ComboBoxItem>Below image</ComboBoxItem>
-      </ComboBox>
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoCurrentUserCheckBox" Grid.Column="1" Content="Current user" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoPrintDateCheckBox" Grid.Column="1" Content="Print date" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageTitleCheckBox" Grid.Column="1" Content="Image title" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageNoteCheckBox" Grid.Column="1" Content="Image note" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageCreateDateCheckBox" Grid.Column="1" Content="Image create date" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageLastChangeDateCheckBox" Grid.Column="1" Content="Image last change date" />
-    </Grid>
+  <StackPanel>
+    <StackPanel Orientation="Horizontal">
+      <StackPanel Grid.IsSharedSizeScope="True" Margin="4" Width="300">
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Printer</Label>
+          <ComboBox x:Name="PrinterComboBox" Grid.Column="1" local:Validation.Required="True" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Number of copies</Label>
+          <TextBox x:Name="NumberOfCopiesTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="NumberOfCopies_PreviewTextInput" local:Validation.Required="True" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Page orientation</Label>
+          <ComboBox x:Name="PageOrientationComboBox" Grid.Column="1" local:Validation.Required="True" >
+            <ComboBoxItem>Portrait</ComboBoxItem>
+            <ComboBoxItem>Landscape</ComboBoxItem>
+          </ComboBox>
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="CenterImageCheckBox" Grid.Column="1" Content="Center image" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="FitImageCheckBox" Grid.Column="1" Content="Fit image" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Print informations</Label>
+          <ComboBox x:Name="InfoTopOfImageComboBox" Grid.Column="1" local:Validation.Required="True" >
+            <ComboBoxItem>Top of image</ComboBoxItem>
+            <ComboBoxItem>Below image</ComboBoxItem>
+          </ComboBox>
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoCurrentUserCheckBox" Grid.Column="1" Content="Current user" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoPrintDateCheckBox" Grid.Column="1" Content="Print date" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoImageTitleCheckBox" Grid.Column="1" Content="Image title" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoImageNoteCheckBox" Grid.Column="1" Content="Image note" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoImageCreateDateCheckBox" Grid.Column="1" Content="Image create date" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <CheckBox x:Name="InfoImageLastChangeDateCheckBox" Grid.Column="1" Content="Image last change date" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Comment</Label>
+          <TextBox x:Name="CommentTextBox" Grid.Column="1" VerticalContentAlignment="Center" MaxLines="5" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        </Grid>
+      </StackPanel>
+      <Grid Margin="8" Width="300" >
+        <Border BorderBrush="Gray" BorderThickness="1">
+          <Border.Effect>
+            <DropShadowEffect Color="LightGray" />
+          </Border.Effect>
+          <Canvas Background="White" />
+        </Border>
+      </Grid>
+    </StackPanel>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
       <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />
       <Button Width="80" Height="24" Content="Cancel" Margin="4" IsCancel="True" />
     </StackPanel>
   </StackPanel>
-
 </Window>

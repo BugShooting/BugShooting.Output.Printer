@@ -137,62 +137,42 @@ namespace BS.Output.Printer
       try
       {
 
-        int numberOfCopies = Output.NumberOfCopies;
-        bool landscape = Output.Landscape;
-        bool centerImage = Output.CenterImage;
-        bool fitImage = Output.FitImage;
-        bool infoTopOfImage = Output.InfoTopOfImage;
-        bool infoWorkstation = Output.InfoWorkstation;
-        bool infoCurrentUser = Output.InfoCurrentUser;
-        bool infoPrintDate = Output.InfoPrintDate;
-        bool infoImageTitle = Output.InfoImageTitle;
-        bool infoImageNote = Output.InfoImageNote;
-        bool infoImageCreateDate = Output.InfoImageCreateDate;
-        bool infoImageLastChangeDate = Output.InfoImageLastChangeDate;
-
-        if (Output.ChangeSettingBeforePrint)
+        using (PrintEngine printEngine = new PrintEngine(ImageData))
         {
 
-          Send send = new Send(numberOfCopies,
-                               landscape,
-                               centerImage,
-                               fitImage,
-                               infoTopOfImage,
-                               infoWorkstation,
-                               infoCurrentUser,
-                               infoPrintDate,
-                               infoImageTitle,
-                               infoImageNote,
-                               infoImageCreateDate,
-                               infoImageLastChangeDate);
+          printEngine.NumberOfCopies = Output.NumberOfCopies;
+          printEngine.Landscape = Output.Landscape;
+          printEngine.CenterImage = Output.CenterImage;
+          printEngine.FitImage = Output.FitImage;
+          printEngine.InfoTopOfImage = Output.InfoTopOfImage;
+          printEngine.InfoWorkstation = Output.InfoWorkstation;
+          printEngine.InfoCurrentUser = Output.InfoCurrentUser;
+          printEngine.InfoPrintDate = Output.InfoPrintDate;
+          printEngine.InfoImageTitle = Output.InfoImageTitle;
+          printEngine.InfoImageNote = Output.InfoImageNote;
+          printEngine.InfoImageCreateDate = Output.InfoImageCreateDate;
+          printEngine.InfoImageLastChangeDate = Output.InfoImageLastChangeDate;
 
-          var ownerHelper = new System.Windows.Interop.WindowInteropHelper(send);
-          ownerHelper.Owner = Owner.Handle;
-
-          if (!send.ShowDialog() == true)
+          if (Output.ChangeSettingBeforePrint)
           {
-            return new V3.SendResult(V3.Result.Canceled);
+
+            Send send = new Send(printEngine);
+
+            var ownerHelper = new System.Windows.Interop.WindowInteropHelper(send);
+            ownerHelper.Owner = Owner.Handle;
+
+            if (!send.ShowDialog() == true)
+            {
+              return new V3.SendResult(V3.Result.Canceled);
+            }
+
           }
 
-          numberOfCopies = send.NumberOfCopies;
-          landscape = send.Landscape;
-          centerImage = send.CenterImage;
-          fitImage = send.FitImage;
-          infoTopOfImage = send.InfoTopOfImage;
-          infoWorkstation = send.InfoWorkstation;
-          infoCurrentUser = send.InfoCurrentUser;
-          infoPrintDate = send.InfoPrintDate;
-          infoImageTitle = send.InfoImageTitle;
-          infoImageNote = send.InfoImageNote;
-          infoImageCreateDate = send.InfoImageCreateDate;
-          infoImageLastChangeDate = send.InfoImageLastChangeDate;
+          printEngine.Print();
+          return new V3.SendResult(V3.Result.Success);
 
         }
-
-        // TODO Drucken
-
-        return new V3.SendResult(V3.Result.Success);
-
+        
       }
       catch (Exception ex)
       {

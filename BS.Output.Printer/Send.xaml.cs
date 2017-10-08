@@ -8,109 +8,91 @@ namespace BS.Output.Printer
 {
   partial class Send : Window
   {
- 
-    public Send(int numberOfCopies,
-                bool landscape,
-                bool centerImage,
-                bool fitImage,
-                bool infoTopOfImage,
-                bool infoWorkstation,
-                bool infoCurrentUser,
-                bool infoPrintDate,
-                bool infoImageTitle,
-                bool infoImageNote,
-                bool infoImageCreateDate,
-                bool infoImageLastChangeDate)
+
+    PrintEngine printEngine;
+
+    public Send(PrintEngine printEngine)
     {
       InitializeComponent();
 
+      this.printEngine = printEngine;
+
       PrinterComboBox.ItemsSource = PrinterSettings.InstalledPrinters;
-      PrinterComboBox.SelectedValue = (new PrinterSettings()).PrinterName;
+      PrinterComboBox.SelectedValue = printEngine.PrinterName;
 
-      NumberOfCopiesTextBox.Text = numberOfCopies.ToString();
-      PageOrientationComboBox.SelectedIndex = (landscape) ? 1 : 0;
-      CenterImageCheckBox.IsChecked = centerImage;
-      FitImageCheckBox.IsChecked = fitImage;
-      InfoTopOfImageComboBox.SelectedIndex = (infoTopOfImage) ? 0 : 1;
-      InfoWorkstationCheckBox.IsChecked = infoWorkstation;
-      InfoCurrentUserCheckBox.IsChecked = infoCurrentUser;
-      InfoPrintDateCheckBox.IsChecked = infoPrintDate;
-      InfoImageTitleCheckBox.IsChecked = infoImageTitle;
-      InfoImageNoteCheckBox.IsChecked = infoImageNote;
-      InfoImageCreateDateCheckBox.IsChecked = infoImageCreateDate;
-      InfoImageLastChangeDateCheckBox.IsChecked = infoImageLastChangeDate;
-
+      NumberOfCopiesTextBox.Text = printEngine.NumberOfCopies.ToString();
+      PageOrientationComboBox.SelectedIndex = (printEngine.Landscape) ? 1 : 0;
+      CenterImageCheckBox.IsChecked = printEngine.CenterImage;
+      FitImageCheckBox.IsChecked = printEngine.FitImage;
+      InfoTopOfImageComboBox.SelectedIndex = (printEngine.InfoTopOfImage) ? 0 : 1;
+      InfoWorkstationCheckBox.IsChecked = printEngine.InfoWorkstation;
+      InfoCurrentUserCheckBox.IsChecked = printEngine.InfoCurrentUser;
+      InfoPrintDateCheckBox.IsChecked = printEngine.InfoPrintDate;
+      InfoImageTitleCheckBox.IsChecked = printEngine.InfoImageTitle;
+      InfoImageNoteCheckBox.IsChecked = printEngine.InfoImageNote;
+      InfoImageCreateDateCheckBox.IsChecked = printEngine.InfoImageCreateDate;
+      InfoImageLastChangeDateCheckBox.IsChecked = printEngine.InfoImageLastChangeDate;
+      CommentTextBox.Text = printEngine.Comment;
+            
       PrinterComboBox.SelectionChanged += ValidateData;
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
       InfoTopOfImageComboBox.SelectionChanged += ValidateData;
       ValidateData(null, null);
 
+      PrinterComboBox.SelectionChanged += PrintSettings_Changed;
+      NumberOfCopiesTextBox.TextChanged += PrintSettings_Changed;
+      PageOrientationComboBox.SelectionChanged += PrintSettings_Changed;
+      CenterImageCheckBox.Checked += PrintSettings_Changed;
+      CenterImageCheckBox.Unchecked += PrintSettings_Changed;
+      FitImageCheckBox.Checked += PrintSettings_Changed;
+      FitImageCheckBox.Unchecked += PrintSettings_Changed;
+      InfoTopOfImageComboBox.SelectionChanged += PrintSettings_Changed;
+      InfoCurrentUserCheckBox.Checked += PrintSettings_Changed;
+      InfoCurrentUserCheckBox.Unchecked += PrintSettings_Changed;
+      InfoPrintDateCheckBox.Checked += PrintSettings_Changed;
+      InfoPrintDateCheckBox.Unchecked += PrintSettings_Changed;
+      InfoImageTitleCheckBox.Checked += PrintSettings_Changed;
+      InfoImageTitleCheckBox.Unchecked += PrintSettings_Changed;
+      InfoImageNoteCheckBox.Checked += PrintSettings_Changed;
+      InfoImageNoteCheckBox.Unchecked += PrintSettings_Changed;
+      InfoImageCreateDateCheckBox.Checked += PrintSettings_Changed;
+      InfoImageCreateDateCheckBox.Unchecked += PrintSettings_Changed;
+      InfoImageLastChangeDateCheckBox.Checked += PrintSettings_Changed;
+      InfoImageLastChangeDateCheckBox.Unchecked += PrintSettings_Changed;
+      CommentTextBox.TextChanged += PrintSettings_Changed;
+
+      InitPreview();
+
     }
 
-    public string PrinterName
+    private void PrintSettings_Changed(object sender, EventArgs e)
     {
-      get { return (string)PrinterComboBox.SelectedValue; }
+
+      printEngine.PrinterName = (string)PrinterComboBox.SelectedItem;
+      printEngine.NumberOfCopies = Convert.ToInt32(NumberOfCopiesTextBox.Text);
+      printEngine.Landscape = PageOrientationComboBox.SelectedIndex == 1;
+      printEngine.CenterImage = CenterImageCheckBox.IsChecked.Value;
+      printEngine.FitImage = FitImageCheckBox.IsChecked.Value;
+      printEngine.InfoTopOfImage = InfoTopOfImageComboBox.SelectedIndex == 0;
+      printEngine.InfoWorkstation = InfoWorkstationCheckBox.IsChecked.Value;
+      printEngine.InfoCurrentUser = InfoCurrentUserCheckBox.IsChecked.Value;
+      printEngine.InfoPrintDate = InfoPrintDateCheckBox.IsChecked.Value;
+      printEngine.InfoImageTitle = InfoImageTitleCheckBox.IsChecked.Value;
+      printEngine.InfoImageNote = InfoImageNoteCheckBox.IsChecked.Value;
+      printEngine.InfoImageCreateDate = InfoImageCreateDateCheckBox.IsChecked.Value;
+      printEngine.InfoImageLastChangeDate = InfoImageLastChangeDateCheckBox.IsChecked.Value;
+      printEngine.Comment = CommentTextBox.Text;
+
+      InitPreview();
+
     }
 
-    public int NumberOfCopies
+    private void InitPreview()
     {
-      get { return Convert.ToInt32(NumberOfCopiesTextBox.Text); }
-    }
 
-    public bool Landscape
-    {
-      get { return PageOrientationComboBox.SelectedIndex == 1; }
-    }
+      // TODO
 
-    public bool CenterImage
-    {
-      get { return CenterImageCheckBox.IsChecked.Value; }
-    }
-
-    public bool FitImage
-    {
-      get { return FitImageCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoTopOfImage
-    {
-      get { return InfoTopOfImageComboBox.SelectedIndex == 0; }
-    }
-
-    public bool InfoWorkstation
-    {
-      get { return InfoWorkstationCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoCurrentUser
-    {
-      get { return InfoCurrentUserCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoPrintDate
-    {
-      get { return InfoPrintDateCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageTitle
-    {
-      get { return InfoImageTitleCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageNote
-    {
-      get { return InfoImageNoteCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageCreateDate
-    {
-      get { return InfoImageCreateDateCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageLastChangeDate
-    {
-      get { return InfoImageLastChangeDateCheckBox.IsChecked.Value; }
     }
 
     private void NumberOfCopies_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -130,7 +112,7 @@ namespace BS.Output.Printer
     {
       this.DialogResult = true;
     }
-
+       
   }
 
 }
