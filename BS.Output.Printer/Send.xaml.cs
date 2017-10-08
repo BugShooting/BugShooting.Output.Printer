@@ -3,6 +3,8 @@ using System.Drawing.Printing;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace BS.Output.Printer
 {
@@ -48,6 +50,8 @@ namespace BS.Output.Printer
       FitImageCheckBox.Checked += PrintSettings_Changed;
       FitImageCheckBox.Unchecked += PrintSettings_Changed;
       InfoTopOfImageComboBox.SelectionChanged += PrintSettings_Changed;
+      InfoWorkstationCheckBox.Checked += PrintSettings_Changed;
+      InfoWorkstationCheckBox.Unchecked += PrintSettings_Changed;
       InfoCurrentUserCheckBox.Checked += PrintSettings_Changed;
       InfoCurrentUserCheckBox.Unchecked += PrintSettings_Changed;
       InfoPrintDateCheckBox.Checked += PrintSettings_Changed;
@@ -110,17 +114,28 @@ namespace BS.Output.Printer
     private void InitPreview()
     {
 
+      int paperHeight;
+
       if (printEngine.Landscape)
       {
-        PrintPreview.Width = PrintPreview.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
+        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
+        paperHeight = printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
       }
       else
       {
-        PrintPreview.Width = PrintPreview.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
+        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
+        paperHeight = printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
       }
 
-      // TODO
-      
+
+      System.Drawing.Bitmap previewImage = new System.Drawing.Bitmap((int)PrintPreviewGrid.Width, (int)PrintPreviewGrid.ActualHeight);
+      using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(previewImage))
+      {
+        printEngine.DrawPage(graphics, previewImage.Size, paperHeight);
+      }
+
+      PrintPreviewImage.Source = Imaging.CreateBitmapSourceFromHBitmap(previewImage.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
     }
 
     private void NumberOfCopies_PreviewTextInput(object sender, TextCompositionEventArgs e)

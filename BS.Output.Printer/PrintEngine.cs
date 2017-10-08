@@ -139,22 +139,22 @@ namespace BS.Output.Printer
     private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
     {
 
-      DrawPage(e.Graphics, e.PageBounds.Size, e.PageBounds.Size.Height, printDocument.DefaultPageSettings.Margins);
+      DrawPage(e.Graphics, e.PageBounds.Size, e.PageBounds.Size.Height);
 
       e.HasMorePages = false;
 
     }
 
-    public void DrawPage(Graphics graphics, Size pageSize, int paperHeight, Margins paperMargins)
+    public void DrawPage(Graphics graphics, Size pageSize, int paperHeight)
     {
 
       double shrinkFactor = paperHeight / pageSize.Height;
-      int marginLeft = (int)(paperMargins.Left / shrinkFactor);
-      int marginTop = (int)(paperMargins.Top / shrinkFactor);
-      int availableWidth = (int)(pageSize.Width - (paperMargins.Right / shrinkFactor) - marginLeft);
-      int availableHeight = (int)(pageSize.Height - (paperMargins.Bottom / shrinkFactor) - marginTop);
+      int marginLeft = (int)(printDocument.DefaultPageSettings.Margins.Left / shrinkFactor);
+      int marginTop = (int)(printDocument.DefaultPageSettings.Margins.Top / shrinkFactor);
+      int availableWidth = (int)(pageSize.Width - (printDocument.DefaultPageSettings.Margins.Right / shrinkFactor) - marginLeft);
+      int availableHeight = (int)(pageSize.Height - (printDocument.DefaultPageSettings.Margins.Bottom / shrinkFactor) - marginTop);
 
-      using (Font infoTextFont = new Font("Arial", (int)(14 / shrinkFactor)))
+      using (Font infoTextFont = new Font(SystemFonts.DefaultFont.FontFamily, (int)(10 / shrinkFactor)))
       {
 
         // Init info text

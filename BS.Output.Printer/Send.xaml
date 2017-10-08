@@ -125,14 +125,14 @@
           <TextBox x:Name="CommentTextBox" Grid.Column="1" VerticalContentAlignment="Center" MaxLines="5" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </Grid>
       </StackPanel>
-      <Grid Margin="8,4" >
-        <Border BorderBrush="Gray" BorderThickness="1">
-          <Border.Effect>
-            <DropShadowEffect Color="LightGray" />
-          </Border.Effect>
-          <Canvas Name="PrintPreview" Background="White" Width="250" />
-        </Border>
-      </Grid>
+      <Border BorderBrush="Gray" BorderThickness="1" Margin="8,4">
+        <Border.Effect>
+          <DropShadowEffect Color="LightGray" />
+        </Border.Effect>
+        <Grid Name="PrintPreviewGrid" Background="White" Width="250" >
+          <Image Name="PrintPreviewImage" Stretch="Fill" />
+        </Grid>
+      </Border>
     </StackPanel>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
       <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />
