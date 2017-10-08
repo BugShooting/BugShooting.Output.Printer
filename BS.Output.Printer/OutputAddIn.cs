@@ -39,7 +39,7 @@ namespace BS.Output.Printer
       Output output = new Output(Name, 
                                  1,
                                  true, 
-                                 false, 
+                                 true, 
                                  true,
                                  false,
                                  false,
@@ -48,7 +48,7 @@ namespace BS.Output.Printer
                                  false,
                                  false,
                                  false,
-                                 true,
+                                 false,
                                  10,
                                  true);
 
