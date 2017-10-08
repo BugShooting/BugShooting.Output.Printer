@@ -126,6 +126,11 @@ namespace BS.Output.Printer
       set { comment = value; }
     }
 
+    public PrintDocument PrintDocument
+    {
+      get { return printDocument; }
+    }
+
     public void Print()
     {
         printDocument.Print();

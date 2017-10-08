@@ -62,19 +62,38 @@ namespace BS.Output.Printer
       InfoImageLastChangeDateCheckBox.Unchecked += PrintSettings_Changed;
       CommentTextBox.TextChanged += PrintSettings_Changed;
 
-      InitPreview();
+    }
 
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+      InitPreview();
     }
 
     private void PrintSettings_Changed(object sender, EventArgs e)
     {
 
-      printEngine.PrinterName = (string)PrinterComboBox.SelectedItem;
-      printEngine.NumberOfCopies = Convert.ToInt32(NumberOfCopiesTextBox.Text);
-      printEngine.Landscape = PageOrientationComboBox.SelectedIndex == 1;
+      if (Validation.IsValid(PrinterComboBox))
+      {
+        printEngine.PrinterName = (string)PrinterComboBox.SelectedItem;
+      }
+
+      if (Validation.IsValid(NumberOfCopiesTextBox))
+      {
+        printEngine.NumberOfCopies = Convert.ToInt32(NumberOfCopiesTextBox.Text);
+      }
+
+      if (Validation.IsValid(PageOrientationComboBox))
+      {
+        printEngine.Landscape = PageOrientationComboBox.SelectedIndex == 1;
+      }
+
+      if (Validation.IsValid(InfoTopOfImageComboBox))
+      {
+        printEngine.InfoTopOfImage = InfoTopOfImageComboBox.SelectedIndex == 0;
+      }
+
       printEngine.CenterImage = CenterImageCheckBox.IsChecked.Value;
       printEngine.FitImage = FitImageCheckBox.IsChecked.Value;
-      printEngine.InfoTopOfImage = InfoTopOfImageComboBox.SelectedIndex == 0;
       printEngine.InfoWorkstation = InfoWorkstationCheckBox.IsChecked.Value;
       printEngine.InfoCurrentUser = InfoCurrentUserCheckBox.IsChecked.Value;
       printEngine.InfoPrintDate = InfoPrintDateCheckBox.IsChecked.Value;
@@ -91,8 +110,17 @@ namespace BS.Output.Printer
     private void InitPreview()
     {
 
-      // TODO
+      if (printEngine.Landscape)
+      {
+        PrintPreview.Width = PrintPreview.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
+      }
+      else
+      {
+        PrintPreview.Width = PrintPreview.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
+      }
 
+      // TODO
+      
     }
 
     private void NumberOfCopies_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -112,7 +140,7 @@ namespace BS.Output.Printer
     {
       this.DialogResult = true;
     }
-       
+
   }
 
 }

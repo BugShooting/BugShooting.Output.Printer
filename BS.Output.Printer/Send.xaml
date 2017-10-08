@@ -9,11 +9,12 @@
         Title="Send"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight" 
+        Loaded="Window_Loaded">
 
-  <StackPanel>
+  <StackPanel Margin="4">
     <StackPanel Orientation="Horizontal">
-      <StackPanel Grid.IsSharedSizeScope="True" Margin="4" Width="300">
+      <StackPanel Grid.IsSharedSizeScope="True" Width="300">
         <Grid Margin="4">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
@@ -124,12 +125,12 @@
           <TextBox x:Name="CommentTextBox" Grid.Column="1" VerticalContentAlignment="Center" MaxLines="5" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </Grid>
       </StackPanel>
-      <Grid Margin="8" Width="300" >
+      <Grid Margin="8,4" >
         <Border BorderBrush="Gray" BorderThickness="1">
           <Border.Effect>
             <DropShadowEffect Color="LightGray" />
           </Border.Effect>
-          <Canvas Background="White" />
+          <Canvas Name="PrintPreview" Background="White" Width="250" />
         </Border>
       </Grid>
     </StackPanel>
