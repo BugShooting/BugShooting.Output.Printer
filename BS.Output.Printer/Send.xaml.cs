@@ -35,11 +35,14 @@ namespace BS.Output.Printer
       InfoImageCreateDateCheckBox.IsChecked = printEngine.InfoImageCreateDate;
       InfoImageLastChangeDateCheckBox.IsChecked = printEngine.InfoImageLastChangeDate;
       CommentTextBox.Text = printEngine.Comment;
-            
+      InfoTextSizeTextBox.Text = printEngine.InfoTextSize.ToString();
+
+
       PrinterComboBox.SelectionChanged += ValidateData;
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
       InfoTopOfImageComboBox.SelectionChanged += ValidateData;
+      InfoTextSizeTextBox.TextChanged += ValidateData;
       ValidateData(null, null);
 
       PrinterComboBox.SelectionChanged += PrintSettings_Changed;
@@ -65,6 +68,7 @@ namespace BS.Output.Printer
       InfoImageLastChangeDateCheckBox.Checked += PrintSettings_Changed;
       InfoImageLastChangeDateCheckBox.Unchecked += PrintSettings_Changed;
       CommentTextBox.TextChanged += PrintSettings_Changed;
+      InfoTextSizeTextBox.TextChanged += PrintSettings_Changed;
 
     }
 
@@ -96,6 +100,11 @@ namespace BS.Output.Printer
         printEngine.InfoTopOfImage = InfoTopOfImageComboBox.SelectedIndex == 0;
       }
 
+      if (Validation.IsValid(InfoTextSizeTextBox))
+      {
+        printEngine.InfoTextSize = Convert.ToInt32(InfoTextSizeTextBox.Text);
+      }
+
       printEngine.CenterImage = CenterImageCheckBox.IsChecked.Value;
       printEngine.FitImage = FitImageCheckBox.IsChecked.Value;
       printEngine.InfoWorkstation = InfoWorkstationCheckBox.IsChecked.Value;
@@ -106,7 +115,7 @@ namespace BS.Output.Printer
       printEngine.InfoImageCreateDate = InfoImageCreateDateCheckBox.IsChecked.Value;
       printEngine.InfoImageLastChangeDate = InfoImageLastChangeDateCheckBox.IsChecked.Value;
       printEngine.Comment = CommentTextBox.Text;
-
+     
       InitPreview();
 
     }
@@ -139,6 +148,11 @@ namespace BS.Output.Printer
     }
 
     private void NumberOfCopies_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+      e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+    }
+
+    private void InfoTextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
     }

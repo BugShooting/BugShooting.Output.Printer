@@ -49,6 +49,7 @@ namespace BS.Output.Printer
                                  false,
                                  false,
                                  true,
+                                 10,
                                  true);
 
       return EditOutput(Owner, output);
@@ -78,6 +79,7 @@ namespace BS.Output.Printer
                           edit.InfoImageNote,
                           edit.InfoImageCreateDate,
                           edit.InfoImageLastChangeDate,
+                          edit.InfoTextSize,
                           edit.ChangeSettingBeforePrint);
       }
       else
@@ -105,6 +107,7 @@ namespace BS.Output.Printer
       outputValues.Add(new OutputValue("InfoImageNote", Output.InfoImageNote.ToString()));
       outputValues.Add(new OutputValue("InfoImageCreateDate", Output.InfoImageCreateDate.ToString()));
       outputValues.Add(new OutputValue("InfoImageLastChangeDate", Output.InfoImageLastChangeDate.ToString()));
+      outputValues.Add(new OutputValue("InfoTextSize", Output.InfoTextSize.ToString()));
       outputValues.Add(new OutputValue("ChangeSettingBeforePrint", Output.ChangeSettingBeforePrint.ToString()));
 
       return outputValues;
@@ -127,6 +130,7 @@ namespace BS.Output.Printer
                         Convert.ToBoolean(OutputValues["InfoImageNote", Convert.ToString(false)].Value),
                         Convert.ToBoolean(OutputValues["InfoImageCreateDate", Convert.ToString(false)].Value),
                         Convert.ToBoolean(OutputValues["InfoImageLastChangeDate", Convert.ToString(false)].Value),
+                        Convert.ToInt32(OutputValues["InfoTextSize", Convert.ToString(10)].Value),
                         Convert.ToBoolean(OutputValues["ChangeSettingBeforePrint", Convert.ToString(true)].Value));
 
     }
@@ -152,6 +156,8 @@ namespace BS.Output.Printer
           printEngine.InfoImageNote = Output.InfoImageNote;
           printEngine.InfoImageCreateDate = Output.InfoImageCreateDate;
           printEngine.InfoImageLastChangeDate = Output.InfoImageLastChangeDate;
+          printEngine.Comment = string.Empty;
+          printEngine.InfoTextSize = Output.InfoTextSize;
 
           if (Output.ChangeSettingBeforePrint)
           {

@@ -23,6 +23,7 @@ namespace BS.Output.Printer
     bool infoImageCreateDate;
     bool infoImageLastChangeDate;
     string comment;
+    int infoTextSize;
     
     public PrintEngine(V3.ImageData imageData)
     {
@@ -126,6 +127,12 @@ namespace BS.Output.Printer
       set { comment = value; }
     }
 
+    public int InfoTextSize
+    {
+      get { return infoTextSize; }
+      set { infoTextSize = value; }
+    }
+
     public PrintDocument PrintDocument
     {
       get { return printDocument; }
@@ -154,7 +161,7 @@ namespace BS.Output.Printer
       int availableWidth = (int)(pageSize.Width - (printDocument.DefaultPageSettings.Margins.Right / shrinkFactor) - marginLeft);
       int availableHeight = (int)(pageSize.Height - (printDocument.DefaultPageSettings.Margins.Bottom / shrinkFactor) - marginTop);
 
-      using (Font infoTextFont = new Font(SystemFonts.DefaultFont.FontFamily, (int)(10 / shrinkFactor)))
+      using (Font infoTextFont = new Font(SystemFonts.DefaultFont.FontFamily, (int)(Math.Max(1, Math.Max(Math.Min(infoTextSize, 30), 1) / shrinkFactor))))
       {
 
         // Init info text
@@ -189,7 +196,7 @@ namespace BS.Output.Printer
         string infoText = infoTextBuilder.ToString();
         int infoTextHeight = 0;
         string printInfoText = string.Empty;
-        
+
         if (!string.IsNullOrEmpty(infoText))
         {
 
@@ -294,7 +301,7 @@ namespace BS.Output.Printer
           {
             graphics.DrawString(printInfoText, infoTextFont, Brushes.Black, new Rectangle(marginLeft, imageTop + (int)(previewImageHeight), availableWidth, infoTextHeight));
           }
-          
+
         }
 
         graphics.ResetClip();

@@ -17,7 +17,8 @@
     bool infoImageNote;
     bool infoImageCreateDate;
     bool infoImageLastChangeDate;
-    
+    int infoTextSize;
+
     bool changeSettingBeforePrint;
   
     public Output(string name,
@@ -33,6 +34,7 @@
                   bool infoImageNote,
                   bool infoImageCreateDate,
                   bool infoImageLastChangeDate,
+                  int infoTextSize,
                   bool changeSettingBeforePrint)
     {
       this.name = name;
@@ -48,6 +50,7 @@
       this.infoImageNote = infoImageNote;
       this.infoImageCreateDate = infoImageCreateDate;
       this.infoImageLastChangeDate = infoImageLastChangeDate;
+      this.infoTextSize = infoTextSize;
       this.changeSettingBeforePrint = changeSettingBeforePrint;
     }
     
@@ -119,6 +122,11 @@
     public bool InfoImageLastChangeDate
     {
       get { return infoImageLastChangeDate; }
+    }
+
+    public int InfoTextSize
+    {
+      get { return infoTextSize; }
     }
 
     public bool ChangeSettingBeforePrint

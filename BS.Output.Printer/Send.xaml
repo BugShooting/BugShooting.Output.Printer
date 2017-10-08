@@ -72,6 +72,14 @@
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
+          <Label Grid.Column="0">Info text size</Label>
+          <TextBox x:Name="InfoTextSizeTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="InfoTextSize_PreviewTextInput" local:Validation.Required="True" />
+        </Grid>
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
           <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
         </Grid>
         <Grid Margin="4">

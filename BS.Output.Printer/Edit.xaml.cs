@@ -30,7 +30,10 @@ namespace BS.Output.Printer
       InfoImageLastChangeDateCheckBox.IsChecked = output.InfoImageLastChangeDate;
       ChangeSettingBeforePrintCheckBox.IsChecked = output.ChangeSettingBeforePrint;
 
-      NameTextBox.TextChanged += ValidateData;
+      NumberOfCopiesTextBox.TextChanged += ValidateData;
+      PageOrientationComboBox.SelectionChanged += ValidateData;
+      InfoTopOfImageComboBox.SelectionChanged += ValidateData;
+      InfoTextSizeTextBox.TextChanged += ValidateData;
       ValidateData(null, null);
 
     }
@@ -100,6 +103,11 @@ namespace BS.Output.Printer
       get { return InfoImageLastChangeDateCheckBox.IsChecked.Value; }
     }
 
+    public int InfoTextSize
+    {
+      get { return Convert.ToInt32(InfoTextSizeTextBox.Text); }
+    }
+
     public bool ChangeSettingBeforePrint
     {
       get { return ChangeSettingBeforePrintCheckBox.IsChecked.Value; }
@@ -110,9 +118,17 @@ namespace BS.Output.Printer
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
     }
 
+    private void InfoTextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+      e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+    }
+
     private void ValidateData(object sender, EventArgs e)
     {
-      OK.IsEnabled = Validation.IsValid(NameTextBox);
+      OK.IsEnabled = Validation.IsValid(NameTextBox) &&
+                     Validation.IsValid(PageOrientationComboBox) &&
+                     Validation.IsValid(InfoTopOfImageComboBox) &&
+                     Validation.IsValid(InfoTextSizeTextBox);
     }
 
     private void OK_Click(object sender, RoutedEventArgs e)
