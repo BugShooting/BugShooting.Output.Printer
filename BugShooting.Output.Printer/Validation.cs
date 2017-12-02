@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace BS.Output.Printer
+namespace BugShooting.Output.Printer
 {
   class Validation
   {

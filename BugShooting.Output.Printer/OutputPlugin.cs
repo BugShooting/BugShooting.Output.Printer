@@ -2,10 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using BS.Plugin.V3.Output;
+using BS.Plugin.V3.Common;
 
-namespace BS.Output.Printer
+namespace BugShooting.Output.Printer
 {
-  public class OutputAddIn: V3.OutputAddIn<Output>
+  public class OutputPlugin: OutputPlugin<Output>
   {
 
     protected override string Name
@@ -89,53 +91,53 @@ namespace BS.Output.Printer
 
     }
 
-    protected override OutputValueCollection SerializeOutput(Output Output)
+    protected override OutputValues SerializeOutput(Output Output)
     {
 
-      OutputValueCollection outputValues = new OutputValueCollection();
+      OutputValues outputValues = new OutputValues();
 
-      outputValues.Add(new OutputValue("Name", Output.Name));
-      outputValues.Add(new OutputValue("NumberOfCopies", Output.NumberOfCopies.ToString()));
-      outputValues.Add(new OutputValue("Landscape", Output.Landscape.ToString()));
-      outputValues.Add(new OutputValue("CenterImage", Output.CenterImage.ToString()));
-      outputValues.Add(new OutputValue("FitImage", Output.FitImage.ToString()));
-      outputValues.Add(new OutputValue("InfoTopOfImage", Output.InfoTopOfImage.ToString()));
-      outputValues.Add(new OutputValue("InfoWorkstation", Output.InfoWorkstation.ToString()));
-      outputValues.Add(new OutputValue("InfoCurrentUser", Output.InfoCurrentUser.ToString()));
-      outputValues.Add(new OutputValue("InfoPrintDate", Output.InfoPrintDate.ToString()));
-      outputValues.Add(new OutputValue("InfoImageTitle", Output.InfoImageTitle.ToString()));
-      outputValues.Add(new OutputValue("InfoImageNote", Output.InfoImageNote.ToString()));
-      outputValues.Add(new OutputValue("InfoImageCreateDate", Output.InfoImageCreateDate.ToString()));
-      outputValues.Add(new OutputValue("InfoImageLastChangeDate", Output.InfoImageLastChangeDate.ToString()));
-      outputValues.Add(new OutputValue("InfoTextSize", Output.InfoTextSize.ToString()));
-      outputValues.Add(new OutputValue("ChangeSettingBeforePrint", Output.ChangeSettingBeforePrint.ToString()));
+      outputValues.Add("Name", Output.Name);
+      outputValues.Add("NumberOfCopies", Output.NumberOfCopies.ToString());
+      outputValues.Add("Landscape", Output.Landscape.ToString());
+      outputValues.Add("CenterImage", Output.CenterImage.ToString());
+      outputValues.Add("FitImage", Output.FitImage.ToString());
+      outputValues.Add("InfoTopOfImage", Output.InfoTopOfImage.ToString());
+      outputValues.Add("InfoWorkstation", Output.InfoWorkstation.ToString());
+      outputValues.Add("InfoCurrentUser", Output.InfoCurrentUser.ToString());
+      outputValues.Add("InfoPrintDate", Output.InfoPrintDate.ToString());
+      outputValues.Add("InfoImageTitle", Output.InfoImageTitle.ToString());
+      outputValues.Add("InfoImageNote", Output.InfoImageNote.ToString());
+      outputValues.Add("InfoImageCreateDate", Output.InfoImageCreateDate.ToString());
+      outputValues.Add("InfoImageLastChangeDate", Output.InfoImageLastChangeDate.ToString());
+      outputValues.Add("InfoTextSize", Output.InfoTextSize.ToString());
+      outputValues.Add("ChangeSettingBeforePrint", Output.ChangeSettingBeforePrint.ToString());
 
       return outputValues;
       
     }
 
-    protected override Output DeserializeOutput(OutputValueCollection OutputValues)
+    protected override Output DeserializeOutput(OutputValues OutputValues)
     {
 
-      return new Output(OutputValues["Name", this.Name].Value,
-                        Convert.ToInt32(OutputValues["NumberOfCopies", Convert.ToString(1)].Value),
-                        Convert.ToBoolean(OutputValues["Landscape", Convert.ToString(true)].Value),
-                        Convert.ToBoolean(OutputValues["CenterImage", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["FitImage", Convert.ToString(true)].Value),
-                        Convert.ToBoolean(OutputValues["InfoTopOfImage", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoWorkstation", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoCurrentUser", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoPrintDate", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoImageTitle", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoImageNote", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoImageCreateDate", Convert.ToString(false)].Value),
-                        Convert.ToBoolean(OutputValues["InfoImageLastChangeDate", Convert.ToString(false)].Value),
-                        Convert.ToInt32(OutputValues["InfoTextSize", Convert.ToString(10)].Value),
-                        Convert.ToBoolean(OutputValues["ChangeSettingBeforePrint", Convert.ToString(true)].Value));
+      return new Output(OutputValues["Name", this.Name],
+                        Convert.ToInt32(OutputValues["NumberOfCopies", Convert.ToString(1)]),
+                        Convert.ToBoolean(OutputValues["Landscape", Convert.ToString(true)]),
+                        Convert.ToBoolean(OutputValues["CenterImage", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["FitImage", Convert.ToString(true)]),
+                        Convert.ToBoolean(OutputValues["InfoTopOfImage", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoWorkstation", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoCurrentUser", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoPrintDate", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoImageTitle", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoImageNote", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoImageCreateDate", Convert.ToString(false)]),
+                        Convert.ToBoolean(OutputValues["InfoImageLastChangeDate", Convert.ToString(false)]),
+                        Convert.ToInt32(OutputValues["InfoTextSize", Convert.ToString(10)]),
+                        Convert.ToBoolean(OutputValues["ChangeSettingBeforePrint", Convert.ToString(true)]));
 
     }
 
-    protected override async Task<V3.SendResult> Send(IWin32Window Owner, Output Output, V3.ImageData ImageData)
+    protected override async Task<SendResult> Send(IWin32Window Owner, Output Output, ImageData ImageData)
     {
 
       try
@@ -169,20 +171,20 @@ namespace BS.Output.Printer
 
             if (!send.ShowDialog() == true)
             {
-              return new V3.SendResult(V3.Result.Canceled);
+              return new SendResult(Result.Canceled);
             }
 
           }
 
           printEngine.Print();
-          return new V3.SendResult(V3.Result.Success);
+          return new SendResult(Result.Success);
 
         }
         
       }
       catch (Exception ex)
       {
-        return new V3.SendResult(V3.Result.Failed, ex.Message);
+        return new SendResult(Result.Failed, ex.Message);
       }
 
     }

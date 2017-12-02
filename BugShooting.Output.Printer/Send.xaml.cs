@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace BS.Output.Printer
+namespace BugShooting.Output.Printer
 {
   partial class Send : Window
   {

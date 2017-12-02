@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
-namespace BS.Output.Printer
+namespace BugShooting.Output.Printer
 {
   partial class Edit : Window
   {

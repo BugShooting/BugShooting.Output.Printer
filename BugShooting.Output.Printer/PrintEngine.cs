@@ -1,15 +1,15 @@
-﻿using System;
+﻿using BS.Plugin.V3.Common;
+using System;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Text;
 
-namespace BS.Output.Printer
+namespace BugShooting.Output.Printer
 {
   internal class PrintEngine : IDisposable
   {
 
-    V3.ImageData imageData;
-    Image image;
+    ImageData imageData;
     PrintDocument printDocument;
 
     bool centerImage;
@@ -25,11 +25,9 @@ namespace BS.Output.Printer
     string comment;
     int infoTextSize;
     
-    public PrintEngine(V3.ImageData imageData)
+    public PrintEngine(ImageData imageData)
     {
       this.imageData = imageData;
-
-      image = imageData.GetImage();
 
       printDocument = new PrintDocument();
       printDocument.DocumentName = "Bug Shooting";
@@ -218,8 +216,8 @@ namespace BS.Output.Printer
 
         // Draw image
 
-        double previewImageWidth = image.Width / shrinkFactor;
-        double previewImageHeight = image.Height / shrinkFactor;
+        double previewImageWidth = imageData.MergedImage.Width / shrinkFactor;
+        double previewImageHeight = imageData.MergedImage.Height / shrinkFactor;
 
 
         if (fitImage)
@@ -285,7 +283,7 @@ namespace BS.Output.Printer
         }
 
         graphics.SetClip(new Rectangle(marginLeft, marginTop, availableWidth, availableHeight));
-        graphics.DrawImage(image, imageLeft, imageTop, (int)(previewImageWidth), (int)(previewImageHeight));
+        graphics.DrawImage(imageData.MergedImage, imageLeft, imageTop, (int)(previewImageWidth), (int)(previewImageHeight));
 
 
         // Draw Text

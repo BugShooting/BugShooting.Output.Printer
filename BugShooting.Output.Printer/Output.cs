@@ -1,4 +1,6 @@
-﻿namespace BS.Output.Printer
+﻿using BS.Plugin.V3.Output;
+
+namespace BugShooting.Output.Printer
 {
 
   public class Output: IOutput 
