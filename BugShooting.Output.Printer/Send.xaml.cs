@@ -26,23 +26,15 @@ namespace BugShooting.Output.Printer
       PageOrientationComboBox.SelectedIndex = (printEngine.Landscape) ? 1 : 0;
       CenterImageCheckBox.IsChecked = printEngine.CenterImage;
       FitImageCheckBox.IsChecked = printEngine.FitImage;
-      InfoTopOfImageComboBox.SelectedIndex = (printEngine.InfoTopOfImage) ? 0 : 1;
-      InfoWorkstationCheckBox.IsChecked = printEngine.InfoWorkstation;
-      InfoCurrentUserCheckBox.IsChecked = printEngine.InfoCurrentUser;
-      InfoPrintDateCheckBox.IsChecked = printEngine.InfoPrintDate;
-      InfoImageTitleCheckBox.IsChecked = printEngine.InfoImageTitle;
-      InfoImageNoteCheckBox.IsChecked = printEngine.InfoImageNote;
-      InfoImageCreateDateCheckBox.IsChecked = printEngine.InfoImageCreateDate;
-      InfoImageLastChangeDateCheckBox.IsChecked = printEngine.InfoImageLastChangeDate;
-      CommentTextBox.Text = printEngine.Comment;
-      InfoTextSizeTextBox.Text = printEngine.InfoTextSize.ToString();
-
-
+      TextPositionComboBox.SelectedIndex = (printEngine.TextTopOfImage) ? 0 : 1;
+      TextSizeTextBox.Text = printEngine.TextSize.ToString();
+      TextTextBox.Text = printEngine.Text;
+            
       PrinterComboBox.SelectionChanged += ValidateData;
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
-      InfoTopOfImageComboBox.SelectionChanged += ValidateData;
-      InfoTextSizeTextBox.TextChanged += ValidateData;
+      TextPositionComboBox.SelectionChanged += ValidateData;
+      TextSizeTextBox.TextChanged += ValidateData;
       ValidateData(null, null);
 
       PrinterComboBox.SelectionChanged += PrintSettings_Changed;
@@ -52,24 +44,15 @@ namespace BugShooting.Output.Printer
       CenterImageCheckBox.Unchecked += PrintSettings_Changed;
       FitImageCheckBox.Checked += PrintSettings_Changed;
       FitImageCheckBox.Unchecked += PrintSettings_Changed;
-      InfoTopOfImageComboBox.SelectionChanged += PrintSettings_Changed;
-      InfoWorkstationCheckBox.Checked += PrintSettings_Changed;
-      InfoWorkstationCheckBox.Unchecked += PrintSettings_Changed;
-      InfoCurrentUserCheckBox.Checked += PrintSettings_Changed;
-      InfoCurrentUserCheckBox.Unchecked += PrintSettings_Changed;
-      InfoPrintDateCheckBox.Checked += PrintSettings_Changed;
-      InfoPrintDateCheckBox.Unchecked += PrintSettings_Changed;
-      InfoImageTitleCheckBox.Checked += PrintSettings_Changed;
-      InfoImageTitleCheckBox.Unchecked += PrintSettings_Changed;
-      InfoImageNoteCheckBox.Checked += PrintSettings_Changed;
-      InfoImageNoteCheckBox.Unchecked += PrintSettings_Changed;
-      InfoImageCreateDateCheckBox.Checked += PrintSettings_Changed;
-      InfoImageCreateDateCheckBox.Unchecked += PrintSettings_Changed;
-      InfoImageLastChangeDateCheckBox.Checked += PrintSettings_Changed;
-      InfoImageLastChangeDateCheckBox.Unchecked += PrintSettings_Changed;
-      CommentTextBox.TextChanged += PrintSettings_Changed;
-      InfoTextSizeTextBox.TextChanged += PrintSettings_Changed;
+      TextPositionComboBox.SelectionChanged += PrintSettings_Changed;
+      TextSizeTextBox.TextChanged += PrintSettings_Changed;
+      TextTextBox.TextChanged += PrintSettings_Changed;
+      
+    }
 
+    public string Text
+    {
+      get { return TextTextBox.Text; }
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -95,27 +78,20 @@ namespace BugShooting.Output.Printer
         printEngine.Landscape = PageOrientationComboBox.SelectedIndex == 1;
       }
 
-      if (Validation.IsValid(InfoTopOfImageComboBox))
+      if (Validation.IsValid(TextPositionComboBox))
       {
-        printEngine.InfoTopOfImage = InfoTopOfImageComboBox.SelectedIndex == 0;
+        printEngine.TextTopOfImage = TextPositionComboBox.SelectedIndex == 0;
       }
 
-      if (Validation.IsValid(InfoTextSizeTextBox))
+      if (Validation.IsValid(TextSizeTextBox))
       {
-        printEngine.InfoTextSize = Convert.ToInt32(InfoTextSizeTextBox.Text);
+        printEngine.TextSize = Convert.ToInt32(TextSizeTextBox.Text);
       }
 
       printEngine.CenterImage = CenterImageCheckBox.IsChecked.Value;
       printEngine.FitImage = FitImageCheckBox.IsChecked.Value;
-      printEngine.InfoWorkstation = InfoWorkstationCheckBox.IsChecked.Value;
-      printEngine.InfoCurrentUser = InfoCurrentUserCheckBox.IsChecked.Value;
-      printEngine.InfoPrintDate = InfoPrintDateCheckBox.IsChecked.Value;
-      printEngine.InfoImageTitle = InfoImageTitleCheckBox.IsChecked.Value;
-      printEngine.InfoImageNote = InfoImageNoteCheckBox.IsChecked.Value;
-      printEngine.InfoImageCreateDate = InfoImageCreateDateCheckBox.IsChecked.Value;
-      printEngine.InfoImageLastChangeDate = InfoImageLastChangeDateCheckBox.IsChecked.Value;
-      printEngine.Comment = CommentTextBox.Text;
-     
+      printEngine.Text = TextTextBox.Text;
+
       InitPreview();
 
     }
@@ -152,7 +128,7 @@ namespace BugShooting.Output.Printer
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
     }
 
-    private void InfoTextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    private void TextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
     }
@@ -162,7 +138,7 @@ namespace BugShooting.Output.Printer
       OK.IsEnabled = Validation.IsValid(PrinterComboBox) &&
                      Validation.IsValid(NumberOfCopiesTextBox) &&
                      Validation.IsValid(PageOrientationComboBox) &&
-                     Validation.IsValid(InfoTopOfImageComboBox);
+                     Validation.IsValid(TextPositionComboBox);
     }
 
     private void OK_Click(object sender, RoutedEventArgs e)

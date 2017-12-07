@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using BS.Plugin.V3.Output;
 using BS.Plugin.V3.Common;
+using BS.Plugin.V3.Utilities;
 
 namespace BugShooting.Output.Printer
 {
@@ -44,14 +45,8 @@ namespace BugShooting.Output.Printer
                                  true, 
                                  true,
                                  false,
-                                 false,
-                                 false,
-                                 false,
-                                 false,
-                                 false,
-                                 false,
-                                 false,
                                  10,
+                                 string.Empty,
                                  true);
 
       return EditOutput(Owner, output);
@@ -73,15 +68,9 @@ namespace BugShooting.Output.Printer
                           edit.Landscape,
                           edit.CenterImage,
                           edit.FitImage,
-                          edit.InfoTopOfImage,
-                          edit.InfoWorkstation,
-                          edit.InfoCurrentUser,
-                          edit.InfoPrintDate,
-                          edit.InfoImageTitle,
-                          edit.InfoImageNote,
-                          edit.InfoImageCreateDate,
-                          edit.InfoImageLastChangeDate,
-                          edit.InfoTextSize,
+                          edit.TextTopOfImage,
+                          edit.TextSize,
+                          edit.Text,
                           edit.ChangeSettingBeforePrint);
       }
       else
@@ -101,15 +90,9 @@ namespace BugShooting.Output.Printer
       outputValues.Add("Landscape", Output.Landscape.ToString());
       outputValues.Add("CenterImage", Output.CenterImage.ToString());
       outputValues.Add("FitImage", Output.FitImage.ToString());
-      outputValues.Add("InfoTopOfImage", Output.InfoTopOfImage.ToString());
-      outputValues.Add("InfoWorkstation", Output.InfoWorkstation.ToString());
-      outputValues.Add("InfoCurrentUser", Output.InfoCurrentUser.ToString());
-      outputValues.Add("InfoPrintDate", Output.InfoPrintDate.ToString());
-      outputValues.Add("InfoImageTitle", Output.InfoImageTitle.ToString());
-      outputValues.Add("InfoImageNote", Output.InfoImageNote.ToString());
-      outputValues.Add("InfoImageCreateDate", Output.InfoImageCreateDate.ToString());
-      outputValues.Add("InfoImageLastChangeDate", Output.InfoImageLastChangeDate.ToString());
-      outputValues.Add("InfoTextSize", Output.InfoTextSize.ToString());
+      outputValues.Add("TextTopOfImage", Output.TextTopOfImage.ToString());
+      outputValues.Add("InfoTextSize", Output.TextSize.ToString());
+      outputValues.Add("Text", Output.Text);
       outputValues.Add("ChangeSettingBeforePrint", Output.ChangeSettingBeforePrint.ToString());
 
       return outputValues;
@@ -124,15 +107,9 @@ namespace BugShooting.Output.Printer
                         Convert.ToBoolean(OutputValues["Landscape", Convert.ToString(true)]),
                         Convert.ToBoolean(OutputValues["CenterImage", Convert.ToString(false)]),
                         Convert.ToBoolean(OutputValues["FitImage", Convert.ToString(true)]),
-                        Convert.ToBoolean(OutputValues["InfoTopOfImage", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoWorkstation", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoCurrentUser", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoPrintDate", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoImageTitle", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoImageNote", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoImageCreateDate", Convert.ToString(false)]),
-                        Convert.ToBoolean(OutputValues["InfoImageLastChangeDate", Convert.ToString(false)]),
-                        Convert.ToInt32(OutputValues["InfoTextSize", Convert.ToString(10)]),
+                        Convert.ToBoolean(OutputValues["TextTopOfImage", Convert.ToString(false)]),
+                        Convert.ToInt32(OutputValues["TextSize", Convert.ToString(10)]),
+                        OutputValues["Text", string.Empty],
                         Convert.ToBoolean(OutputValues["ChangeSettingBeforePrint", Convert.ToString(true)]));
 
     }
@@ -150,16 +127,9 @@ namespace BugShooting.Output.Printer
           printEngine.Landscape = Output.Landscape;
           printEngine.CenterImage = Output.CenterImage;
           printEngine.FitImage = Output.FitImage;
-          printEngine.InfoTopOfImage = Output.InfoTopOfImage;
-          printEngine.InfoWorkstation = Output.InfoWorkstation;
-          printEngine.InfoCurrentUser = Output.InfoCurrentUser;
-          printEngine.InfoPrintDate = Output.InfoPrintDate;
-          printEngine.InfoImageTitle = Output.InfoImageTitle;
-          printEngine.InfoImageNote = Output.InfoImageNote;
-          printEngine.InfoImageCreateDate = Output.InfoImageCreateDate;
-          printEngine.InfoImageLastChangeDate = Output.InfoImageLastChangeDate;
-          printEngine.Comment = string.Empty;
-          printEngine.InfoTextSize = Output.InfoTextSize;
+          printEngine.TextTopOfImage = Output.TextTopOfImage;
+          printEngine.TextSize = Output.TextSize;
+          printEngine.Text = AttributeHelper.ReplaceAttributes(Output.Text, ImageData);
 
           if (Output.ChangeSettingBeforePrint)
           {
@@ -175,7 +145,7 @@ namespace BugShooting.Output.Printer
             }
 
           }
-
+                   
           printEngine.Print();
           return new SendResult(Result.Success);
 

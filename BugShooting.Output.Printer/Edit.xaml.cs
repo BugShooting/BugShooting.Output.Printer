@@ -1,10 +1,9 @@
-﻿using System;
+﻿using BS.Plugin.V3.Utilities;
+using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
-using System.Text.RegularExpressions;
 
 namespace BugShooting.Output.Printer
 {
@@ -14,27 +13,30 @@ namespace BugShooting.Output.Printer
     public Edit(Output output)
     {
       InitializeComponent();
-  
+
+      foreach (string attributeReplacement in AttributeHelper.GetAttributeReplacements())
+      {
+        MenuItem item = new MenuItem();
+        item.Header = new TextBlock() { Text = attributeReplacement };
+        item.Tag = attributeReplacement;
+        item.Click += TextAttributeReplacementItem_Click;
+        TextAttributeReplacementList.Items.Add(item);
+      }
+
       NameTextBox.Text = output.Name;
       NumberOfCopiesTextBox.Text = output.NumberOfCopies.ToString();
       PageOrientationComboBox.SelectedIndex = (output.Landscape) ? 1 : 0;
       CenterImageCheckBox.IsChecked = output.CenterImage;
       FitImageCheckBox.IsChecked = output.FitImage;
-      InfoTopOfImageComboBox.SelectedIndex = (output.InfoTopOfImage) ? 0 : 1;
-      InfoTextSizeTextBox.Text = output.InfoTextSize.ToString();
-      InfoWorkstationCheckBox.IsChecked = output.InfoWorkstation;
-      InfoCurrentUserCheckBox.IsChecked = output.InfoCurrentUser;
-      InfoPrintDateCheckBox.IsChecked = output.InfoPrintDate;
-      InfoImageTitleCheckBox.IsChecked = output.InfoImageTitle;
-      InfoImageNoteCheckBox.IsChecked = output.InfoImageNote;
-      InfoImageCreateDateCheckBox.IsChecked = output.InfoImageCreateDate;
-      InfoImageLastChangeDateCheckBox.IsChecked = output.InfoImageLastChangeDate;
+      TextPositionComboBox.SelectedIndex = (output.TextTopOfImage) ? 0 : 1;
+      TextSizeTextBox.Text = output.TextSize.ToString();
+      TextTextBox.Text = output.Text;
       ChangeSettingBeforePrintCheckBox.IsChecked = output.ChangeSettingBeforePrint;
       
       NumberOfCopiesTextBox.TextChanged += ValidateData;
       PageOrientationComboBox.SelectionChanged += ValidateData;
-      InfoTopOfImageComboBox.SelectionChanged += ValidateData;
-      InfoTextSizeTextBox.TextChanged += ValidateData;
+      TextPositionComboBox.SelectionChanged += ValidateData;
+      TextSizeTextBox.TextChanged += ValidateData;
       ValidateData(null, null);
 
     }
@@ -64,49 +66,19 @@ namespace BugShooting.Output.Printer
       get { return FitImageCheckBox.IsChecked.Value; }
     }
 
-    public bool InfoTopOfImage
+    public bool TextTopOfImage
     {
-      get { return InfoTopOfImageComboBox.SelectedIndex == 0; }
+      get { return TextPositionComboBox.SelectedIndex == 0; }
     }
 
-    public bool InfoWorkstation
+    public int TextSize
     {
-      get { return InfoWorkstationCheckBox.IsChecked.Value; }
+      get { return Convert.ToInt32(TextSizeTextBox.Text); }
     }
 
-    public bool InfoCurrentUser
+    public string Text
     {
-      get { return InfoCurrentUserCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoPrintDate
-    {
-      get { return InfoPrintDateCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageTitle
-    {
-      get { return InfoImageTitleCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageNote
-    {
-      get { return InfoImageNoteCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageCreateDate
-    {
-      get { return InfoImageCreateDateCheckBox.IsChecked.Value; }
-    }
-
-    public bool InfoImageLastChangeDate
-    {
-      get { return InfoImageLastChangeDateCheckBox.IsChecked.Value; }
-    }
-
-    public int InfoTextSize
-    {
-      get { return Convert.ToInt32(InfoTextSizeTextBox.Text); }
+      get { return TextTextBox.Text; }
     }
 
     public bool ChangeSettingBeforePrint
@@ -119,17 +91,39 @@ namespace BugShooting.Output.Printer
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
     }
 
-    private void InfoTextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    private void TextSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
       e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+    }
+
+    private void TextAttributeReplacement_Click(object sender, RoutedEventArgs e)
+    {
+      TextAttributeReplacement.ContextMenu.IsEnabled = true;
+      TextAttributeReplacement.ContextMenu.PlacementTarget = TextAttributeReplacement;
+      TextAttributeReplacement.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+      TextAttributeReplacement.ContextMenu.IsOpen = true;
+    }
+
+    private void TextAttributeReplacementItem_Click(object sender, RoutedEventArgs e)
+    {
+
+      MenuItem item = (MenuItem)sender;
+
+      int selectionStart = TextTextBox.SelectionStart;
+
+      TextTextBox.Text = TextTextBox.Text.Substring(0, TextTextBox.SelectionStart) + item.Tag.ToString() + TextTextBox.Text.Substring(TextTextBox.SelectionStart, TextTextBox.Text.Length - TextTextBox.SelectionStart);
+
+      TextTextBox.SelectionStart = selectionStart + item.Tag.ToString().Length;
+      TextTextBox.Focus();
+
     }
 
     private void ValidateData(object sender, EventArgs e)
     {
       OK.IsEnabled = Validation.IsValid(NameTextBox) &&
                      Validation.IsValid(PageOrientationComboBox) &&
-                     Validation.IsValid(InfoTopOfImageComboBox) &&
-                     Validation.IsValid(InfoTextSizeTextBox);
+                     Validation.IsValid(TextPositionComboBox) &&
+                     Validation.IsValid(TextSizeTextBox);
     }
 
     private void OK_Click(object sender, RoutedEventArgs e)

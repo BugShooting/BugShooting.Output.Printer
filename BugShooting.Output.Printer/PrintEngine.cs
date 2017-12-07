@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Text;
 
 namespace BugShooting.Output.Printer
 {
@@ -14,17 +13,10 @@ namespace BugShooting.Output.Printer
 
     bool centerImage;
     bool fitImage;
-    bool infoTopOfImage;
-    bool infoWorkstation;
-    bool infoCurrentUser;
-    bool infoPrintDate;
-    bool infoImageTitle;
-    bool infoImageNote;
-    bool infoImageCreateDate;
-    bool infoImageLastChangeDate;
-    string comment;
-    int infoTextSize;
-    
+    bool textTopOfImage;
+    int textSize;
+    string text;
+
     public PrintEngine(ImageData imageData)
     {
       this.imageData = imageData;
@@ -34,6 +26,11 @@ namespace BugShooting.Output.Printer
       printDocument.PrintController = new StandardPrintController();
       printDocument.PrintPage += PrintDocument_PrintPage;
 
+    }
+
+    public ImageData ImageData
+    {
+      get { return imageData; }
     }
 
     public string PrinterName
@@ -71,64 +68,22 @@ namespace BugShooting.Output.Printer
       set { fitImage = value; }
     }
 
-    public bool InfoTopOfImage
+    public bool TextTopOfImage
     {
-      get { return infoTopOfImage; }
-      set { infoTopOfImage = value; }
+      get { return textTopOfImage; }
+      set { textTopOfImage = value; }
     }
 
-    public bool InfoWorkstation
+    public int TextSize
     {
-      get { return infoWorkstation; }
-      set { infoWorkstation = value; }
+      get { return textSize; }
+      set { textSize = value; }
     }
 
-    public bool InfoCurrentUser
+    public string Text
     {
-      get { return infoCurrentUser; }
-      set { infoCurrentUser = value; }
-    }
-
-    public bool InfoPrintDate
-    {
-      get { return infoPrintDate; }
-      set { infoPrintDate = value; }
-    }
-
-    public bool InfoImageTitle
-    {
-      get { return infoImageTitle; }
-      set { infoImageTitle = value; }
-    }
-
-    public bool InfoImageNote
-    {
-      get { return infoImageNote; }
-      set { infoImageNote = value; }
-    }
-
-    public bool InfoImageCreateDate
-    {
-      get { return infoImageCreateDate; }
-      set { infoImageCreateDate = value; }
-    }
-
-    public bool InfoImageLastChangeDate
-    {
-      get { return infoImageLastChangeDate; }
-      set { infoImageLastChangeDate = value; }
-    }
-
-    public string Comment
-    {
-      get { return comment; }
-      set { comment = value; }
-    }
-
-    public int InfoTextSize
-    {
-      get { return infoTextSize; }
-      set { infoTextSize = value; }
+      get { return text; }
+      set { text = value; }
     }
 
     public PrintDocument PrintDocument
@@ -159,67 +114,36 @@ namespace BugShooting.Output.Printer
       int availableWidth = (int)(pageSize.Width - (printDocument.DefaultPageSettings.Margins.Right / shrinkFactor) - marginLeft);
       int availableHeight = (int)(pageSize.Height - (printDocument.DefaultPageSettings.Margins.Bottom / shrinkFactor) - marginTop);
 
-      using (Font infoTextFont = new Font(SystemFonts.DefaultFont.FontFamily, (int)(Math.Max(1, Math.Max(Math.Min(infoTextSize, 30), 1) / shrinkFactor))))
+      using (Font textFont = new Font(SystemFonts.DefaultFont.FontFamily, (int)(Math.Max(1, Math.Max(Math.Min(textSize, 30), 1) / shrinkFactor))))
       {
 
-        // Init info text
-        StringBuilder infoTextBuilder = new StringBuilder();
+        // Calculate text height
+        int textHeight = 0;
+        string printText = string.Empty;
 
-        if (infoWorkstation)
-          infoTextBuilder.AppendFormat("Workstation: {0}\r\n", Environment.MachineName);
-
-        if (infoCurrentUser)
-          infoTextBuilder.AppendFormat("User name: {0}\r\n", Environment.UserName);
-
-        if (infoPrintDate)
-          infoTextBuilder.AppendFormat("Print date: {0}\r\n", DateTime.Now.ToString("G"));
-
-        if (infoImageTitle)
-          infoTextBuilder.AppendFormat("Image title: {0}\r\n", imageData.Title);
-
-        if (infoImageNote)
-          infoTextBuilder.AppendFormat("Image note: {0}\r\n", imageData.Note);
-
-        if (infoImageCreateDate)
-          infoTextBuilder.AppendFormat("Create date: {0}\r\n", imageData.CreateDate.ToString("G"));
-
-        if (infoImageLastChangeDate)
-          infoTextBuilder.AppendFormat("Last change: {0}\r\n", imageData.ChangeDate.ToString("G"));
-
-        if (!string.IsNullOrEmpty(comment))
-          infoTextBuilder.AppendFormat("\r\n{0}\r\n", comment);
-
-
-        // Calculate info text height
-        string infoText = infoTextBuilder.ToString();
-        int infoTextHeight = 0;
-        string printInfoText = string.Empty;
-
-        if (!string.IsNullOrEmpty(infoText))
+        if (!string.IsNullOrEmpty(text))
         {
 
-          if (infoTopOfImage)
+          if (textTopOfImage)
           {
-            printInfoText = infoText + Environment.NewLine;
+            printText = text + Environment.NewLine;
           }
           else
           {
-            printInfoText = Environment.NewLine + infoText;
+            printText = Environment.NewLine + text;
           }
 
-          infoTextHeight = (int)(graphics.MeasureString(printInfoText, infoTextFont, new Size(availableWidth, availableHeight)).Height);
+          textHeight = (int)(graphics.MeasureString(printText, textFont, new Size(availableWidth, availableHeight)).Height);
 
         }
 
-        int availableImageHeight = availableHeight - infoTextHeight;
+        int availableImageHeight = availableHeight - textHeight;
 
 
         // Draw image
-
         double previewImageWidth = imageData.MergedImage.Width / shrinkFactor;
         double previewImageHeight = imageData.MergedImage.Height / shrinkFactor;
-
-
+        
         if (fitImage)
         {
           if (previewImageWidth < availableWidth)
@@ -256,11 +180,11 @@ namespace BugShooting.Output.Printer
           imageLeft = (int)(marginLeft + availableWidth / 2 - previewImageWidth / 2);
           imageTop = (int)(marginTop + availableImageHeight / 2 - previewImageHeight / 2);
 
-          if (infoTopOfImage)
+          if (textTopOfImage)
           {
-            if (imageTop < marginTop + infoTextHeight)
+            if (imageTop < marginTop + textHeight)
             {
-              imageTop = marginTop + infoTextHeight;
+              imageTop = marginTop + textHeight;
             }
           }
           else
@@ -276,9 +200,9 @@ namespace BugShooting.Output.Printer
           imageLeft = marginLeft;
           imageTop = marginTop;
 
-          if (infoTopOfImage)
+          if (textTopOfImage)
           {
-            imageTop += infoTextHeight;
+            imageTop += textHeight;
           }
         }
 
@@ -287,17 +211,16 @@ namespace BugShooting.Output.Printer
 
 
         // Draw Text
-
-        if (!string.IsNullOrEmpty(printInfoText))
+        if (!string.IsNullOrEmpty(printText))
         {
 
-          if (infoTopOfImage)
+          if (textTopOfImage)
           {
-            graphics.DrawString(printInfoText, infoTextFont, Brushes.Black, new Rectangle(marginLeft, marginTop, availableWidth, infoTextHeight));
+            graphics.DrawString(printText, textFont, Brushes.Black, new Rectangle(marginLeft, marginTop, availableWidth, textHeight));
           }
           else
           {
-            graphics.DrawString(printInfoText, infoTextFont, Brushes.Black, new Rectangle(marginLeft, imageTop + (int)(previewImageHeight), availableWidth, infoTextHeight));
+            graphics.DrawString(printText, textFont, Brushes.Black, new Rectangle(marginLeft, imageTop + (int)(previewImageHeight), availableWidth, textHeight));
           }
 
         }

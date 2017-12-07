@@ -67,8 +67,8 @@
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Print informations</Label>
-      <ComboBox x:Name="InfoTopOfImageComboBox" Grid.Column="1" SelectedValuePath="Name" local:Validation.Required="True" >
+      <Label Grid.Column="0">Text position</Label>
+      <ComboBox x:Name="TextPositionComboBox" Grid.Column="1" SelectedValuePath="Name" local:Validation.Required="True" >
         <ComboBoxItem>Top of image</ComboBoxItem>
         <ComboBoxItem>Below image</ComboBoxItem>
       </ComboBox>
@@ -78,57 +78,21 @@
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <Label Grid.Column="0">Info text size</Label>
-      <TextBox x:Name="InfoTextSizeTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="InfoTextSize_PreviewTextInput" local:Validation.Required="True" />
+      <Label Grid.Column="0">Text size</Label>
+      <TextBox x:Name="TextSizeTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="TextSize_PreviewTextInput" local:Validation.Required="True" />
     </Grid>
     <Grid Margin="4">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoCurrentUserCheckBox" Grid.Column="1" Content="Current user" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoPrintDateCheckBox" Grid.Column="1" Content="Print date" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageTitleCheckBox" Grid.Column="1" Content="Image title" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageNoteCheckBox" Grid.Column="1" Content="Image note" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageCreateDateCheckBox" Grid.Column="1" Content="Image create date" />
-    </Grid>
-    <Grid Margin="4">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <CheckBox x:Name="InfoImageLastChangeDateCheckBox" Grid.Column="1" Content="Image last change date" />
+      <Label Grid.Column="0">Text</Label>
+      <TextBox x:Name="TextTextBox" Grid.Column="1" VerticalContentAlignment="Center" Margin="0,0,26,0" MaxLines="10" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+      <Button x:Name="TextAttributeReplacement" Grid.Column="1" Content="%" Width="25" HorizontalAlignment="Right" Click="TextAttributeReplacement_Click">
+        <Button.ContextMenu>
+          <ContextMenu x:Name="TextAttributeReplacementList" />
+        </Button.ContextMenu>
+      </Button>
     </Grid>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
       <Button x:Name="OK" Width="80" Height="24" Content="OK" Margin="4" IsDefault="True" Click="OK_Click" />

@@ -14,7 +14,7 @@
 
   <StackPanel Margin="4">
     <StackPanel Orientation="Horizontal">
-      <StackPanel Grid.IsSharedSizeScope="True" Width="300">
+      <StackPanel Grid.IsSharedSizeScope="True" Width="350">
         <Grid Margin="4">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
@@ -61,8 +61,8 @@
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
-          <Label Grid.Column="0">Print informations</Label>
-          <ComboBox x:Name="InfoTopOfImageComboBox" Grid.Column="1" local:Validation.Required="True" >
+          <Label Grid.Column="0">Text position</Label>
+          <ComboBox x:Name="TextPositionComboBox" Grid.Column="1" local:Validation.Required="True" >
             <ComboBoxItem>Top of image</ComboBoxItem>
             <ComboBoxItem>Below image</ComboBoxItem>
           </ComboBox>
@@ -72,72 +72,23 @@
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
-          <Label Grid.Column="0">Info text size</Label>
-          <TextBox x:Name="InfoTextSizeTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="InfoTextSize_PreviewTextInput" local:Validation.Required="True" />
+          <Label Grid.Column="0">Text size</Label>
+          <TextBox x:Name="TextSizeTextBox" Grid.Column="1" VerticalContentAlignment="Center" PreviewTextInput="TextSize_PreviewTextInput" local:Validation.Required="True" />
         </Grid>
         <Grid Margin="4">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoWorkstationCheckBox" Grid.Column="1" Content="Workstation" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoCurrentUserCheckBox" Grid.Column="1" Content="Current user" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoPrintDateCheckBox" Grid.Column="1" Content="Print date" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoImageTitleCheckBox" Grid.Column="1" Content="Image title" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoImageNoteCheckBox" Grid.Column="1" Content="Image note" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoImageCreateDateCheckBox" Grid.Column="1" Content="Image create date" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <CheckBox x:Name="InfoImageLastChangeDateCheckBox" Grid.Column="1" Content="Image last change date" />
-        </Grid>
-        <Grid Margin="4">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0">Comment</Label>
-          <TextBox x:Name="CommentTextBox" Grid.Column="1" VerticalContentAlignment="Center" MaxLines="5" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+          <Label Grid.Column="0">Text</Label>
+          <TextBox x:Name="TextTextBox" Grid.Column="1" VerticalContentAlignment="Center" MaxLines="10" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </Grid>
       </StackPanel>
       <Border BorderBrush="Gray" BorderThickness="1" Margin="8,4">
         <Border.Effect>
           <DropShadowEffect Color="LightGray" />
         </Border.Effect>
-        <Grid Name="PrintPreviewGrid" Background="White" Width="250" >
+        <Grid Name="PrintPreviewGrid" Background="White" Width="300" >
           <Image Name="PrintPreviewImage" Stretch="Fill" />
         </Grid>
       </Border>

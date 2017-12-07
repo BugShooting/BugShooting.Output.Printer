@@ -11,15 +11,9 @@ namespace BugShooting.Output.Printer
     bool landscape;
     bool centerImage;
     bool fitImage;
-    bool infoTopOfImage;
-    bool infoWorkstation;
-    bool infoCurrentUser;
-    bool infoPrintDate;
-    bool infoImageTitle;
-    bool infoImageNote;
-    bool infoImageCreateDate;
-    bool infoImageLastChangeDate;
-    int infoTextSize;
+    bool textTopOfImage;
+    int textSize;
+    string text;
 
     bool changeSettingBeforePrint;
   
@@ -28,15 +22,9 @@ namespace BugShooting.Output.Printer
                   bool landscape,
                   bool centerImage,
                   bool fitImage,
-                  bool infoTopOfImage,
-                  bool infoWorkstation,
-                  bool infoCurrentUser,
-                  bool infoPrintDate,
-                  bool infoImageTitle,
-                  bool infoImageNote,
-                  bool infoImageCreateDate,
-                  bool infoImageLastChangeDate,
-                  int infoTextSize,
+                  bool textTopOfImage,
+                  int textSize,
+                  string text,
                   bool changeSettingBeforePrint)
     {
       this.name = name;
@@ -44,15 +32,9 @@ namespace BugShooting.Output.Printer
       this.landscape = landscape;
       this.centerImage = centerImage;
       this.fitImage = fitImage;
-      this.infoTopOfImage = infoTopOfImage;
-      this.infoWorkstation = infoWorkstation;
-      this.infoCurrentUser = infoCurrentUser;
-      this.infoPrintDate = infoPrintDate;
-      this.infoImageTitle = infoImageTitle;
-      this.infoImageNote = infoImageNote;
-      this.infoImageCreateDate = infoImageCreateDate;
-      this.infoImageLastChangeDate = infoImageLastChangeDate;
-      this.infoTextSize = infoTextSize;
+      this.textTopOfImage = textTopOfImage;
+      this.textSize = textSize;
+      this.text = text;
       this.changeSettingBeforePrint = changeSettingBeforePrint;
     }
     
@@ -86,50 +68,21 @@ namespace BugShooting.Output.Printer
       get { return fitImage; }
     }
 
-    public bool InfoTopOfImage
+    public bool TextTopOfImage
     {
-      get { return infoTopOfImage; }
+      get { return textTopOfImage; }
+    }
+    
+    public int TextSize
+    {
+      get { return textSize; }
     }
 
-    public bool InfoWorkstation
+    public string Text
     {
-      get { return infoWorkstation; }
+      get { return text; }
     }
 
-    public bool InfoCurrentUser
-    {
-      get { return infoCurrentUser; }
-    }
-
-    public bool InfoPrintDate
-    {
-      get { return infoPrintDate; }
-    }
-
-    public bool InfoImageTitle
-    {
-      get { return infoImageTitle; }
-    }
-
-    public bool InfoImageNote
-    {
-      get { return infoImageNote; }
-    }
-
-    public bool InfoImageCreateDate
-    {
-      get { return infoImageCreateDate; }
-    }
-
-    public bool InfoImageLastChangeDate
-    {
-      get { return infoImageLastChangeDate; }
-    }
-
-    public int InfoTextSize
-    {
-      get { return infoTextSize; }
-    }
 
     public bool ChangeSettingBeforePrint
     {

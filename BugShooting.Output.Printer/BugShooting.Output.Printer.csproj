@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BS.Plugin.V3, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BugShooting.Plugin.V3.3.0.0\lib\BS.Plugin.V3.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="BS.Plugin.V3">
+      <HintPath>O:\Bin\BS.Plugin.V3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -80,7 +79,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\logo_64.png" />
   </ItemGroup>
   <ItemGroup>
