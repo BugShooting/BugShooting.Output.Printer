@@ -87,7 +87,7 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <Label Grid.Column="0">Text</Label>
-      <TextBox x:Name="TextTextBox" Grid.Column="1" VerticalContentAlignment="Center" Margin="0,0,26,0" MaxLines="10" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+      <TextBox x:Name="TextTextBox" Grid.Column="1" Margin="0,0,26,0" Height="100" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
       <Button x:Name="TextAttributeReplacement" Grid.Column="1" Content="%" Width="25" HorizontalAlignment="Right" Click="TextAttributeReplacement_Click">
         <Button.ContextMenu>
           <ContextMenu x:Name="TextAttributeReplacementList" />

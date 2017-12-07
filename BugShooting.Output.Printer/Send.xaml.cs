@@ -99,17 +99,19 @@ namespace BugShooting.Output.Printer
     private void InitPreview()
     {
 
+      PaperSize paperSize = printEngine.PrintDocument.DefaultPageSettings.PaperSize;
+
       int paperHeight;
 
       if (printEngine.Landscape)
       {
-        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
-        paperHeight = printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
+        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / paperSize.Width * paperSize.Height;
+        paperHeight = paperSize.Width;
       }
       else
       {
-        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height * printEngine.PrintDocument.DefaultPageSettings.PaperSize.Width;
-        paperHeight = printEngine.PrintDocument.DefaultPageSettings.PaperSize.Height;
+        PrintPreviewGrid.Width = PrintPreviewGrid.ActualHeight / paperSize.Height * paperSize.Width;
+        paperHeight = paperSize.Height;
       }
 
 
