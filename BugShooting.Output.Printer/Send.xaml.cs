@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace BugShooting.Output.Printer
 {
@@ -12,12 +13,17 @@ namespace BugShooting.Output.Printer
   {
 
     PrintEngine printEngine;
+    DispatcherTimer previewDelayTimer;
 
     public Send(PrintEngine printEngine)
     {
       InitializeComponent();
 
       this.printEngine = printEngine;
+    
+      previewDelayTimer = new DispatcherTimer();
+      previewDelayTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+      previewDelayTimer.Tick += PreviewDelayTimer_Tick;
 
       PrinterComboBox.ItemsSource = PrinterSettings.InstalledPrinters;
       PrinterComboBox.SelectedValue = printEngine.PrinterName;
@@ -98,6 +104,16 @@ namespace BugShooting.Output.Printer
 
     private void InitPreview()
     {
+
+      previewDelayTimer.Stop();
+      previewDelayTimer.Start();
+      
+    }
+    
+    private void PreviewDelayTimer_Tick(object sender, EventArgs e)
+    {
+
+      previewDelayTimer.Stop();
 
       PaperSize paperSize = printEngine.PrintDocument.DefaultPageSettings.PaperSize;
 
